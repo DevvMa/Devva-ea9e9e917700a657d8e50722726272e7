@@ -23,17 +23,28 @@
   </head>
   <body>
     <div>
-      <label for="" id="clock">Current Time : </label>
+      <label id="clock">Current Time : </label>
       <button onclick="getLog()">Hello</button>
     </div>
   </body>
   <script>
     window.onload = function () {
-      showTime();
-      setInterval(showTime, 1000);
+      if (checkCookie()) {
+        showTime();
+        setInterval(showTime, 1000);
+      } else {
+        window.location.href = "../front-end/index.html";
+      }
     };
   </script>
   <script>
+    function checkCookie() {
+      var cookie = document.cookie;
+      if (cookie != "") {
+        return true;
+      }
+      return false;
+    }
     function getLog() {
       const username = document.cookie
         .split("; ")

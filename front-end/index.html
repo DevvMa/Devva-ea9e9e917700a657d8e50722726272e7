@@ -43,13 +43,13 @@
       });
 
       $.ajax({
-        url: "/mkmtest/back-end/api/login.php",
+        url: "../back-end/api/login.php",
         type: "POST",
         contentType: "application/json",
         data: dataForm,
         success: function (response) {
           console.log(response);
-          window.location.href = "/mkmtest/front-end/home.html";
+          window.location.href = "home.html";
         },
       });
     }

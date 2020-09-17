@@ -17,6 +17,7 @@ class user{
     {
         $query = mysqli_query($this->koneksi, "select * from mkm_user where username='$this->username'");
         $userData = mysqli_fetch_array($query);
+        
         if (password_verify($this->password, $userData['password'])) {
             date_default_timezone_set('Asia/Jakarta');
             $currentTime = date('H:i:s');
@@ -28,7 +29,7 @@ class user{
             $_SESSION['username'] = $userData['username'];
             $_SESSION['time'] = $currentTime;
 
-            $query = mysqli_query($this->koneksi, "insert into mkm_loginlog values ('','$userData[id]',1,'$currentTime')");
+            $query = mysqli_query($this->koneksi, "insert into mkm_loginlog values ('','$userData[id]','$_SESSION[username]','$currentTime')");
 
             return true;
         } else {
