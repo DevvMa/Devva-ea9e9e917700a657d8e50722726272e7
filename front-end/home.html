@@ -34,6 +34,18 @@
     };
   </script>
   <script>
-    function getLog() {}
+    function getLog() {
+      const username = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("username"))
+        .split("=")[1];
+      var time = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("time"))
+        .split("=")[1];
+      time = time.replace(/%3A/g, ":");
+      alert("Hello " + username + " waktu login anda: " + time);
+      // console.log(time + username);
+    }
   </script>
 </html>
