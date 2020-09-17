@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./css/login.css" />
     <script
       src="https://code.jquery.com/jquery-3.5.1.min.js"
       integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
@@ -19,38 +26,83 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-</head>
-<body>
-    <div>
-        <form id="formCreateUser">
-          <input type="text" name="username" />
-          <input type="password" name="password" />
-          <button onclick="createUser()">Buat User</button>
-        </form>
-        <a href="index.html">Back to login</a>
-</body>
-<script>
-    function createUser() {
-      event.preventDefault();
-      var form = document.getElementById("formCreateUser").elements;
-      var fUsername = form.username.value;
-      var fPassword = form.password.value;
-
-      var dataForm = JSON.stringify({
-        username: fUsername,
-        password: fPassword,
-      });
-
-      $.ajax({
-        url: "/mkmtest/back-end/api/create.php",
-        type: "POST",
-        contentType: "application/json",
-        data: dataForm,
-        success: function (response) {
-          alert(response)
-          window.location.href = "index.html";
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+  </head>
+  <body class="text-center">
+    <form class="form-signin" id="formCreateUser" name="formCreateUser">
+      <h1 class="h3 mb-3 font-weight-normal">REGISTER</h1>
+      <label for="inputUsername" class="sr-only">Username</label>
+      <input
+        name="username"
+        type="text"
+        class="form-control"
+        placeholder="Username"
+        required
+        autofocus
+      />
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        class="form-control"
+        placeholder="Password"
+        required
+      />
+      <label for="inputRepeatPassword" class="sr-only">Retype Password</label>
+      <input
+        id="repeatPassword"
+        name="repeatPassword"
+        type="password"
+        class="form-control"
+        placeholder="Retype Password"
+        required
+      />
+      <button class="btn btn-lg btn-primary btn-block" type="submit">
+        Daftar
+      </button>
+      <p>
+        Kembali ke halaman
+        <a href="index.html">Login</a>
+      </p>
+    </form>
+  </body>
+  <script>
+    $("#formCreateUser").submit(function (e) {
+      e.preventDefault();
+      var validator = $("#formCreateUser").validate({
+        rules: {
+          password: "required",
+          repeatPassword: {
+            equalTo: "#password",
+          },
+        },
+        messages: {
+          password: " Masukkan Password",
+          repeatPassword: " Ketik ulang password anda dengan tepat",
         },
       });
-    }
-</script>
+      if (validator.form()) {
+        var $inputs = $("#formCreateUser :input");
+        var dataForm = {};
+        $inputs.each(function (i) {
+          if (i < 2) {
+            dataForm[this.name] = $(this).val();
+          }
+        });
+        dataForm = JSON.stringify(dataForm);
+
+        $.ajax({
+          url: "/mkmtest/back-end/api/create.php",
+          type: "POST",
+          contentType: "application/json",
+          data: dataForm,
+          success: function (response) {
+            alert(response);
+            window.location.href = "index.html";
+          },
+        });
+      }
+    });
+  </script>
 </html>

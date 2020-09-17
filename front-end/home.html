@@ -24,39 +24,60 @@
   <body>
     <div>
       <label id="clock">Current Time : </label>
-      <button onclick="getLog()">Hello</button>
+      <button onclick="hello()">Hello</button>
+      <button onclick="logOut()">Keluar</button>
+      <button onclick="checkCookie()">Check</button>
     </div>
   </body>
   <script>
     window.onload = function () {
-      if (checkCookie()) {
-        showTime();
-        setInterval(showTime, 1000);
-      } else {
-        window.location.href = "../front-end/index.html";
-      }
+      getLog();
+      showTime();
+      setInterval(showTime, 1000);
     };
   </script>
   <script>
-    function checkCookie() {
-      var cookie = document.cookie;
-      if (cookie != "") {
-        return true;
-      }
-      return false;
+    function logOut() {
+      $.ajax({
+        url: "../back-end/api/logout.php",
+        type: "POST",
+        contentType: "application/json",
+        success: function (response) {
+          window.location.href = "../front-end/index.html";
+        },
+      });
     }
+
+    function checkCookie() {
+      var cookies = getLog();
+      if (cookies === "") {
+      }
+      return true;
+    }
+
+    function hello() {
+      var cookies = getLog();
+      alert("Hello " + cookies[0] + " waktu login anda: " + cookies[1]);
+    }
+
     function getLog() {
-      const username = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("username"))
-        .split("=")[1];
-      var time = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("time"))
-        .split("=")[1];
-      time = time.replace(/%3A/g, ":");
-      alert("Hello " + username + " waktu login anda: " + time);
-      // console.log(time + username);
+      if (document.cookie != "") {
+        const username = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("username"))
+          .split("=")[1];
+        var time = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("time"))
+          .split("=")[1];
+        time = time.replace(/%3A/g, ":");
+        var savedCookies = [username, time];
+        return savedCookies;
+        // alert("Hello " + username + " waktu login anda: " + time);
+        // console.log(time + username);
+      } else {
+        window.location.href = "../front-end/index.html";
+      }
     }
   </script>
 </html>

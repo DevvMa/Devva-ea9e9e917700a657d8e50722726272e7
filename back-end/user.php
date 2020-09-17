@@ -23,13 +23,13 @@ class user{
             $currentTime = date('H:i:s');
 
             // Save Cookie & Session
-            setcookie('username', $userData['username'], time() + (60 * 60 * 24 * 5), '/');
-            setcookie('time', $currentTime, time() + (60 * 60 * 24 * 5), '/');
+            setcookie('username', $userData['username'], time() + (60 * 60), '/');
+            setcookie('time', $currentTime, time() + (60 * 60), '/');
             
-            $_SESSION['username'] = $userData['username'];
-            $_SESSION['time'] = $currentTime;
+            // $_SESSION['username'] = $userData['username'];
+            // $_SESSION['time'] = $currentTime;
 
-            $query = mysqli_query($this->koneksi, "insert into mkm_loginlog values ('','$userData[id]','$_SESSION[username]','$currentTime')");
+            $query = mysqli_query($this->koneksi, "insert into mkm_loginlog values ('','$userData[id]','$userData[username]','$currentTime')");
 
             return true;
         } else {
@@ -39,8 +39,12 @@ class user{
 
     function logout()
     {
-        $query = mysqli_query($this->koneksi, "select * from mkm_user");
-        return $query;
+        session_unset();
+        session_destroy();
+        setcookie('PHPSESSID', "", time() - 3600, '/');
+        setcookie('username', "", time() - 3600, '/');
+        setcookie('time', "", time() - 3600, '/');
+        return true;
     }
     
     function createUser()

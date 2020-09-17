@@ -17,15 +17,9 @@
     $item->username = $data->username;
     $item->password = $data->password;
     
-
-    // $userArr = $items->Login()->fetch_array(MYSQLI_ASSOC); 
-    // if($userArr['nama'] != null){
-    //     echo json_encode($userArr);
-    // }
-   
     if($item->login()){
-        echo json_encode("User berhasil Login.");
+        echo json_encode(true);
     } else{
-        echo json_encode("User gagal login.");
+        echo json_encode(false);
     }
 ?>
