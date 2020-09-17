@@ -48,6 +48,7 @@
         data: dataForm,
         success: function (response) {
           alert(response)
+          window.location.href = "/mkmtest/front-end/index.php";
         },
       });
     }
