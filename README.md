@@ -1,4 +1,4 @@
-# Login with non-blocking Ajax
+# Login and Register with non-blocking Ajax
 Penerapan non-blocking Ajax pada proses login dan register user. Aplikasi ini terdiri dari 3 halaman:
 * Home
 * Register
