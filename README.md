@@ -16,7 +16,7 @@ Terdapat sistem validasi menggunakan jQuary validation untuk memastikan user men
 Terdapat sistem verifikasi user dan password.<br>
 ![loginpage](/readme/login.gif)
 
-#### Yang saya pelajari
+# Yang saya pelajari
 - [x] Ajax Non-blocking script menggunakan jQuery
 - [x] Clock counter
 - [x] Session & Cookies
